@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3 # Three replicas of the nginx pod
+  selector:
+    matchLabels:
+      app: nginx-deployment-label # This is the label used for pod selection
+
+  template:
+    metadata:
+      labels:
+        app: nginx-deployment-label # Must match matchLabels above
+
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80 # Nginx default port is 80

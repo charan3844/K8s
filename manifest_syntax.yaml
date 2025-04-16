@@ -1,0 +1,7 @@
+apiVersion: <API_VERSION> # Specifies the Kubernetes API version
+kind: <RESOURCE_KIND> # Type of Kubernetes resource (Pod, Deployment, Service, etc.)
+metadata:
+  name: <RESOURCE_NAME> # Name of the resource
+  labels:
+    <KEY>: <VALUE> # Optional labels for identifying the resource
+spec: # Specification of the resource (varies based on the resource type)

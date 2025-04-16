@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadbalancer
+spec:
+  replicas: 3 # Three replicas of the nginx pod
+  selector:
+    matchLabels:
+      app: loadbalancer-label # This is the label used for pod selection
+
+  template:
+    metadata:
+      labels:
+        app: loadbalancer-label # Must match matchLabels above
+
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80 # Nginx default port is 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-service
+  labels:
+    app: loadbalancer-label # Label for the service
+spec:
+  type: LoadBalancer
+  selector:
+    app: loadbalancer-label
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

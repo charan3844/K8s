@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clusterip
+spec:
+  replicas: 3 # Three replicas of the nginx pod
+  selector:
+    matchLabels:
+      app: clusterip-label # This is the label used for pod selection
+
+  template:
+    metadata:
+      labels:
+        app: clusterip-label # Must match matchLabels above
+
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80 # Nginx default port is 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-service
+  labels:
+    app: clusterip-label # Label for the service
+spec:
+  type: ClusterIP # Default type (explicitly mentioned)
+  selector:
+    app: clusterip-label # Matches the label used in the Deployment
+  ports:
+  - protocol: TCP
+    port: 80 # Service port
+    targetPort: 80 # Must match the containerPort of the pod
