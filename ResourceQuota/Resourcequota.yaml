@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: test-quota # Name of the resource quota
+  name: resourcequota # Name of the resource quota
   namespace: test
 spec:
   hard:
