@@ -9,11 +9,3 @@ spec:
     image: nginx:latest
     ports:
     - containerPort: 80 # Default Nginx port is 80
-    #Resource Quota
-    resources:
-      requests:
-        memory: "6Gi"
-        cpu: "2"
-      limits:
-        memory: "8Gi"
-        cpu: "2" # CPU limit is 2 cores
