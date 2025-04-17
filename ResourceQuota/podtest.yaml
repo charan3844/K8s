@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: nginx-test
   namespace: test #Mention the isolated namespace
 spec:
   containers:
@@ -12,8 +12,8 @@ spec:
     # Resource Quota
     resources:
       requests:
-        memory: "6Gi"
-        cpu: "2"
+        memory: "1Gi"
+        cpu: "1"
       limits:
-        memory: "8Gi"
+        memory: "2Gi"
         cpu: "2" # CPU limit is 2 cores
