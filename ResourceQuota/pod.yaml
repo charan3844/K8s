@@ -1,0 +1,28 @@
+# deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx # Use this label to match the pods
+  template:
+    metadata:
+      labels:
+        app: nginx # This label is used to select the pods
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+        #Resource Quota
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "2"
+          limits:
+            memory: "4Gi"
+            cpu: "4"

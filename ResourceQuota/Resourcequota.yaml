@@ -9,4 +9,4 @@ spec:
     requests.memory: 8Gi # Total memory requests cannot exceed 8Gi
     limits.cpu: "6" # Total CPU limits cannot exceed 6 cores
     limits.memory: 12Gi # Total memory limits cannot exceed 12Gi
-    pods: "10" # Maximum 10 pods allowed
+    pods: "3" # Maximum 10 pods allowed
