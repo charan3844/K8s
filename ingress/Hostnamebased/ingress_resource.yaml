@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: hostbased-ingress
   namespace: test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
