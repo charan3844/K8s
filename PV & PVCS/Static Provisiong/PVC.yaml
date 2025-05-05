@@ -1,0 +1,29 @@
+# Static Provisioning
+# Create a PV first and then create a PVC that uses the PV
+# The PV must be created before the PVC, and the PVC must match the PV's specifications
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-pv # Name of the PV
+spec:
+  capacity:
+    storage: 1Gi # Size of the volume
+  accessModes:
+  - ReadWriteOnce # Access mode for the volume
+  persistentVolumeReclaimPolicy: Retain # Policy for reclaiming the volume after use
+  storageClassName: standard # Storage class to use for the PV (if any)
+  hostPath:
+    path: /data/nginx # Path on the host where the volume is located, on the pod it will be mounted at /data
+    type: DirectoryOrCreate # Type of the host path, DirectoryOrCreate means it will create the directory if it doesn't exist
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc # Name of the PVC
+spec:
+  accessModes:
+  - ReadWriteOnce # Access mode for the volume
+  storageClassName: standard # Storage class to use for the PVC (if any)
+  resources:
+    requests:
+      storage: 1Gi # Size of the volume requested
