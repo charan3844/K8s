@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-pod
+spec:
+  serviceName: "headlessservice" # Name of the headless service for DNS
+  replicas: 3 # Number of pods to create
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql-container
+        image: mysql:5.7 # MySQL container image
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql # Mount persistent storage to this directory, Path inside the container where the volume will be mounted
+
+  # Persistent Volume Claims for dynamic provisioning of storage
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-volume # Name of the PVC to be created for each pod
+    spec:
+      storageClassName: dynamic-local # Storage class to use for the PVC
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi # Request 1GB of storage per pod
