@@ -8,4 +8,4 @@ spec:
     app: mysql
   ports:
   - port: 3306
-  # This allows each pod to be addressed by a unique DNS hostname.
+  # This allows each pod to be addressed by a unique DNS hostname. Hostname
