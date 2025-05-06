@@ -25,8 +25,17 @@ spec:
         ports:
         - containerPort: 3306
         volumeMounts:
-        - name: mysql-data
+        - name: mysql-volume
           mountPath: /var/lib/mysql # Mount persistent storage to this directory, Path inside the container where the volume will be mounted
+        - name: mysql-config
+          mountPath: /etc/mysql/my.cnf # Mount the config file to this directory, Path inside the container where the config file will be mounted
+          subPath: my.cnf # Mount the config file from the ConfigMap
+          readOnly: true # Make the config read-only
+      # Create a volume from a ConfigMap and make its contents available to the container as files inside the pod's filesystem.
+      volumes:
+      - name: mysql-config
+        configMap:
+          name: mysql-config # Name of the ConfigMap to use
 
   # Persistent Volume Claims for dynamic provisioning of storage
   volumeClaimTemplates:
