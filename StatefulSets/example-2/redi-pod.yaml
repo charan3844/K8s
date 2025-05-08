@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-statefulset
+  namespace: dev
+spec:
+  serviceName: redis-pod
+  replicas: 3 # Number of Redis pods to deploy
+  selector:
+    matchLabels:
+      app: redis-service # Label selector to match pods managed by this StatefulSet
+  template:
+    metadata:
+      labels:
+        app: redis-service # Labels to identify the pods
+    spec:
+      containers:
+      - name: redis-container
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        # Environment variables from Secret and ConfigMap
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret # Secret name containing REDIS_PASSWORD
+              key: password # Key inside the Secret
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: envsetting # ConfigMap name containing REDIS_HOST
+              key: REDIS_HOST # Key inside the ConfigMap
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: envsetting # ConfigMap name containing REDIS_PORT
+              key: REDIS_PORT # Key inside the ConfigMap
+        volumeMounts:
+        - name: redis-storage # Volume name to mount inside the container
+          mountPath: /data # Mount path inside the container for Redis data
+
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-storage # PVC name template; each pod gets its own volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ] # Volume can be mounted by a single node
+      resources:
+        requests:
+          storage: 1Gi # Request 1Gi storage per pod
+      storageClassName: dynamic-local # StorageClass for dynamic provisioning
