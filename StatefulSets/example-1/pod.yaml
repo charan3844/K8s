@@ -26,7 +26,7 @@ spec:
         - containerPort: 3306
         volumeMounts:
         - name: mysql-volume
-          mountPath: /var/lib/mysql # Mount persistent storage to this directory, Path inside the container where the volume will be mounted
+          mountPath: /var/lib/mysql # Mount the volume to the container in this path
         - name: mysql-config
           mountPath: /etc/mysql/my.cnf # Mount the config file to this directory, Path inside the container where the config file will be mounted
           subPath: my.cnf # Mount the config file from the ConfigMap
