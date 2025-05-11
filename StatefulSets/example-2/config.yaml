@@ -1,0 +1,10 @@
+#Environment Variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: envsetting
+  namespace: dev
+data:
+  LOG_LEVEL: "INFO"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"

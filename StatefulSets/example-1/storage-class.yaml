@@ -1,0 +1,8 @@
+#storageclass
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: dynamic-local # Name of the storage class
+provisioner: rancher.io/local-path # Provisioner to use for the storage class
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer # Volume binding mode for the storage class

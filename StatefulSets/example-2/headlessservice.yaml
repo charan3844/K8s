@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-service
+  namespace: dev
+  labels:
+    app: redis-service # This should match the labels of the pods in the StatefulSet
+spec:
+  clusterIP: None # Headless service
+  ports:
+  - name: redis-port
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis-service # This should match the labels of the pods in the StatefulSet
+  type: ClusterIP # Default type for headless service, can be omitted

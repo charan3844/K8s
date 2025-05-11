@@ -1,0 +1,13 @@
+# Dynamic Provisioning
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc # Name of the PVC
+  namespace: test
+spec:
+  accessModes:
+  - ReadWriteOnce # Access mode for the volume
+  storageClassName: dynamic-local # Storage class to use for the PVC (if any)
+  resources:
+    requests:
+      storage: 1Gi # Size of the volume requested

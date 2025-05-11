@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-pod
+spec:
+  template:
+    spec:
+      containers:
+      - name: job-container
+        image: busybox
+        command: [ "sh", "-c", "echo Hello from the Job! && sleep 30" ]
+      restartPolicy: OnFailure # Restart the container if it fails
+  backoffLimit: 4 #
+  ttlSecondsAfterFinished: 30 # Clean up the Job 30 seconds after it finishes
